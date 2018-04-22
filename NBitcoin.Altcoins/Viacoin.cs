@@ -192,7 +192,7 @@ namespace NBitcoin.Altcoins
 				RuleChangeActivationThreshold = 2700,
 				MinerConfirmationWindow = 3600,
 				CoinbaseMaturity = 100,
-				HashGenesisBlock = new uint256("770aa712aa08fdcbdecc1c8df1b3e2d4e17a7cf6e63a28b785b32e74c96cb27d"),
+				HashGenesisBlock = new uint256("f0dae070f24fbc35311533a22aa85c0a616c84a1f22881612304d802acda286f"),
 				LitecoinWorkCalculation = true,
 				ConsensusFactory = new ViacoinConsensusFactory()
 			})
@@ -203,7 +203,7 @@ namespace NBitcoin.Altcoins
 			.SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] { 0x04, 0x35, 0x83, 0x94 })
 			.SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, Encoders.Bech32("tvia"))
 			.SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, Encoders.Bech32("tvia"))
-			.SetMagic(0xda5bbffa)
+			.SetMagic(0x377b972d)
 			.SetPort(15224)
 			.SetRPCPort(15223)
 			.SetName("via-reg")
