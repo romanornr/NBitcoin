@@ -122,21 +122,21 @@ namespace NBitcoin.Tests
 				Version = "0.15.1",
 				Windows = new NodeOSDownloadData()
 				{
-					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v0.15.1/viacoin-0.15.1-win64.zip",
+					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v{0}/viacoin-{0}-win64.zip",
 					Archive = "viacoin-{0}-win64.zip",
 					Executable = "viacoin-{0}/bin/viacoind.exe",
-					Hash = "002dacfe55c786d7f1fa8ba39e8df7bbfa1f8eaf1717f65fb348de6c2834b36d"
+					Hash = "408d270db88e345fb5d4e93b5ec0f7761c676e4d795458ebaffce6de6cde65af"
 				},
 				Linux = new NodeOSDownloadData()
 				{
-					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v0.15.1/viacoin-0.15.1-x86_64-linux-gnu.tar.gz",
+					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v{0}/viacoin-{0}-x86_64-linux-gnu.tar.gz",
 					Archive = "viacoin-{0}-linux64.tar.gz",
 					Executable = "viacoin-{0}/bin/viacoind",
 					Hash = "673bfd17194ca4fe8408450e1871447d461ce26925e71ea55eebd89c379f5775"
 				},
 				Mac = new NodeOSDownloadData()
 				{
-					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v0.15.1/viacoin-0.15.1-osx-unsigned.tar.gz",
+					DownloadLink = "https://github.com/viacoin/viacoin/releases/download/v{0}/viacoin-{0}-osx-unsigned.dmg",
 					Archive = "viacoin-{0}-osx64.tar.gz",
 					Executable = "viacoin-{0}/bin/viacoind",
 					Hash = "673bfd17194ca4fe8408450e1871447d461ce26925e71ea55eebd89c379f5775"

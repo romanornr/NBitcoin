@@ -321,7 +321,7 @@ namespace NBitcoin
 			public TransactionBuildingContext(TransactionBuilder builder)
 			{
 				Builder = builder;
-				Transaction = new Transaction();
+				Transaction = builder._ConsensusFactory.CreateTransaction();
 				AdditionalFees = Money.Zero;
 			}
 			public TransactionBuilder.BuilderGroup Group
@@ -1044,6 +1044,18 @@ namespace NBitcoin
 			return this;
 		}
 
+		ConsensusFactory _ConsensusFactory = Network.Main.Consensus.ConsensusFactory;
+		public TransactionBuilder SetConsensusFactory(ConsensusFactory consensusFactory)
+		{
+			_ConsensusFactory = consensusFactory ?? Network.Main.Consensus.ConsensusFactory;
+			return this;
+		}
+
+		public TransactionBuilder SetConsensusFactory(Network network)
+		{
+			return SetConsensusFactory(network?.Consensus?.ConsensusFactory);
+		}
+
 		public TransactionBuilder SetCoinSelector(ICoinSelector selector)
 		{
 			if(selector == null)
@@ -1059,7 +1071,9 @@ namespace NBitcoin
 		/// <exception cref="NBitcoin.NotEnoughFundsException">Not enough funds are available</exception>
 		public Transaction BuildTransaction(bool sign)
 		{
-			return BuildTransaction(sign, SigHash.All);
+			var tx = BuildTransaction(sign, SigHash.All);
+			_built = true;
+			return tx;
 		}
 
 		/// <summary>
@@ -1222,6 +1236,10 @@ namespace NBitcoin
 		public Transaction SignTransactionInPlace(Transaction transaction, SigHash sigHash)
 		{
 			TransactionSigningContext ctx = new TransactionSigningContext(this, transaction);
+			if(transaction is IHasForkId hasForkId)
+			{
+				sigHash = (SigHash)((uint)sigHash | 0x40u);
+			}
 			ctx.SigHash = sigHash;
 			foreach(var input in transaction.Inputs.AsIndexedInputs())
 			{
@@ -1744,7 +1762,8 @@ namespace NBitcoin
 
 
 		Transaction _CompletedTransaction;
-
+		private bool _built = false;
+		
 		/// <summary>
 		/// Allows to keep building on the top of a partially built transaction
 		/// </summary>
@@ -1752,6 +1771,8 @@ namespace NBitcoin
 		/// <returns></returns>
 		public TransactionBuilder ContinueToBuild(Transaction transaction)
 		{
+			if(_built) 
+				throw new InvalidOperationException("ContinueToBuild must be called with a new TransactionBuilder instance"); 
 			if(_CompletedTransaction != null)
 				throw new InvalidOperationException("Transaction to complete already set");
 			_CompletedTransaction = transaction.Clone();
